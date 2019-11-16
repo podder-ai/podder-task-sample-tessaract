@@ -14,15 +14,15 @@ class ImageConverter(object):
     def convert(self):
         images = []
         filetype = FileTypeDetector(self.file_path).detect()
-
         if filetype == FileTypeDetector.FILETYPE_PDF:
             images = convert_from_path(self.file_path)
-
+            print("Detected filetype: PDF, " + str(len(images)) + " page(s)")
         elif filetype in [
                 FileTypeDetector.FILETYPE_JPEG, FileTypeDetector.FILETYPE_PNG,
                 FileTypeDetector.FILETYPE_TIFF
         ]:
             images.append(Image.open(self.file_path))
+            print("Detected filetype: " + filetype)
         else:
             raise PodderTaskException(
                 "Unsupported File Type", "This task can accept PDF, TIFF, JPEG, PNG only",

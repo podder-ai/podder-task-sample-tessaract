@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any
 
 from podder_task_foundation import Context, Task as BaseTask
@@ -33,11 +34,12 @@ class Task(BaseTask):
 
         # Add your code here
         print("Process file:" + file_path)
-        texts = self._reader.get_text(file_path)
-        file_path = "output.txt"
-        context.file.write_text_to_output_file(file_path, "\n".join(texts))
 
-        outputs = file_path
+        texts = self._reader.get_text(file_path)
+        output_file_path = Path(file_path).name + '.txt'
+        context.file.write_text_to_output_file(output_file_path, "\n".join(texts))
+
+        outputs = output_file_path
         context.logger.debug("outputs: {}".format(outputs))
         context.logger.debug("Complete executing.")
         return outputs

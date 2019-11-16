@@ -1,5 +1,5 @@
-name: your_task_name
-description: description text
+name: Tessaract OCR
+description: Extract Text From Image ( PDF/JPEG/PNG/TIFF ). It uses Tessaract as OCR engine.
 interface:
   input:
     input_01: dataset

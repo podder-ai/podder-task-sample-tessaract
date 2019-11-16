@@ -18,6 +18,9 @@ class TextReader(object):
         images = ImageConverter(source_file).convert()
 
         if len(images) > 0:
+            language = self._config.get('ocr.language', 'eng')
+            print("Language: " + language)
+
             for image in images:
                 con12_image = image
                 if image.mode != 'P':
@@ -26,7 +29,7 @@ class TextReader(object):
 
                 raw_text = pytesseract.image_to_string(
                     con12_image,
-                    lang=self._config.get('ocr.language', 'eng'),
+                    lang=language,
                     config='--psm ' + str(self._config.get('ocr.psm', 6)))
                 texts.extend(raw_text.split("\n"))
         else:
