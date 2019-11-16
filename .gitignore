@@ -1,0 +1,27 @@
+__pycache__/
+
+.mypy_cache/
+.coverage
+.pytest_cache/
+.DS_Store
+
+env/
+venv/
+.env
+.env.*
+!.env.example
+
+.vscode
+.idea
+
+# Ignore generated proto interface files
+*_pb2.py
+*_pb2_grpc.py
+
+tmp/*
+input/*
+output/*
+error/*
+logs/*
+!.gitkeep
+.python-version

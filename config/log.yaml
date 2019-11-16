@@ -1,0 +1,2 @@
+task_log_format: "[%(asctime)s.%(msecs)03d] %(levelname)s - (%(progresstime)s) - %(message)s"
+server_log_format: "[%(asctime)s.%(msecs)03d] %(levelname)s - %(message)s"

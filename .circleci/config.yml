@@ -1,0 +1,29 @@
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: circleci/python:3.6
+jobs:
+  test:
+    executor:
+      name: default
+    environment:
+      POC_BASE_ROOT: /home/circleci/project
+      PIPELINE_DATABASE_URL: mysql://root:password@dbserver/pipeline
+    steps:
+      - checkout
+      - run:
+          name: Run pytest
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install 'podder-task-base>=0.1.7,<0.2.0'
+            python -m podder_task_base.task_initializer init podder-task --target-dir=$PWD
+            pip install -r requirements.default.txt
+            pip install -r requirements.txt
+            pip install pytest
+            PYTHONPATH=. pytest
+workflows:
+  build:
+    jobs:
+      - test

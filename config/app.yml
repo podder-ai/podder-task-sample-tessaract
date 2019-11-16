@@ -1,0 +1,7 @@
+name: your_task_name
+description: description text
+interface:
+  input:
+    input_01: dataset
+  output:
+    output_01: dataset
