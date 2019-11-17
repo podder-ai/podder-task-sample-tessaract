@@ -1,18 +1,19 @@
 from pathlib import Path
 
 import pytesseract
-from PIL import ImageEnhance
 from podder_task_foundation.config import Config
 from podder_task_foundation.exceptions import PodderTaskException
 
 from .image_converter import ImageConverter
+from .preprocessor import Preprocessor
 
 
 class TextReader(object):
     def __init__(self, config: Config):
         self._config = config
+        self._preprocessor = Preprocessor(config)
 
-    def get_text(self, image_file: str):
+    def get_text(self, image_file: str) -> [str]:
         texts = []
         source_file = Path(image_file)
         images = ImageConverter(source_file).convert()
@@ -22,15 +23,10 @@ class TextReader(object):
             print("Language: " + language)
 
             for image in images:
-                con12_image = image
-                if image.mode != 'P':
-                    con12 = ImageEnhance.Sharpness(image)
-                    con12_image = con12.enhance(1.5)
 
+                image = self._preprocessor.preprocess(image)
                 raw_text = pytesseract.image_to_string(
-                    con12_image,
-                    lang=language,
-                    config='--psm ' + str(self._config.get('ocr.psm', 6)))
+                    image, lang=language, config='--psm ' + str(self._config.get('ocr.psm', 6)))
                 texts.extend(raw_text.split("\n"))
         else:
             raise PodderTaskException(

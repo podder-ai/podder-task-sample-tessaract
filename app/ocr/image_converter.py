@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from pdf2image import convert_from_path
-from PIL import Image, ImageEnhance
+from PIL import Image
 from podder_task_foundation.exceptions import PodderTaskException
 
 from .file_type_detector import FileTypeDetector
@@ -11,7 +11,7 @@ class ImageConverter(object):
     def __init__(self, file_path: str):
         self.file_path = Path(file_path)
 
-    def convert(self):
+    def convert(self) -> []:
         images = []
         filetype = FileTypeDetector(self.file_path).detect()
         if filetype == FileTypeDetector.FILETYPE_PDF:
